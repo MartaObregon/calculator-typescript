@@ -5,6 +5,9 @@ import styled from 'styled-components';
 
 type Props ={
     label:string;
+    position?: [x:number, y:number];
+    width?: number;
+    height?: number;
 }
 
 const StyledButton = styled.button`
@@ -18,10 +21,23 @@ const StyledButton = styled.button`
 `;
 
 
-const Button: React.FC<Props> = ({label}) =>{
+const Button: React.FC<Props> = ({height, label, position, width}) =>{
+
+    const styles: React.CSSProperties = {};
+    if(position){
+        styles.gridColumnStart = position[0] +1;
+        styles.gridRowStart = position[1] +1;
+    }
+    if(width){
+        styles.gridColumnEnd = `span ${width}`
+    }
+    if(height){
+        styles.gridRowEnd = `span ${height}`
+    }
+
     return (
         <div>
-            <StyledButton>{label}</StyledButton>
+            <StyledButton style= {styles}>{label}</StyledButton>
         </div>
     )
 }
